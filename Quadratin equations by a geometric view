@@ -1,0 +1,68 @@
+from manim import *
+
+class QuaEqGeo(Scene):
+    def construct(self):
+        Chamada1 = Text("Vamos entender a solução da equação do 2º grau").scale(0.5).shift(UP*2)
+        Chamada2 = Text("do ponto de vista geométrico!").scale(0.5).shift(UP*1.5)
+        FSC1 = MathTex(r"ax^2+bx+c = 0").scale(2)
+        FSC2 = MathTex(r"x^2").scale(2).set_fill(RED, opacity = 3.5).shift(3*LEFT)
+        Square1 = Square(side_length = 10).shift(3*LEFT).scale(0.5)
+        Square_Label1 = MathTex(r"x").shift(6*LEFT).scale(2)
+
+        rect_width = 5
+        rect_height = 1.25
+        rect1 = Rectangle(width=rect_width, height=rect_height)
+        rect2 = Rectangle(width=rect_width, height=rect_height)
+        rect_group = VGroup(rect1, rect2).arrange(DOWN, buff=0).move_to(RIGHT*3)
+
+        Rectangles_Label = MathTex(r"bx").set_fill(RED, opacity=3.5).scale(2).move_to(rect_group).shift(DOWN*0.43)
+        Rectangles_Label2a = MathTex(r"\frac{b}{2}").scale(1).next_to(rect1, RIGHT, buff=0.1)
+        Rectangles_Label2b = MathTex(r"\frac{b}{2}").scale(1).next_to(rect2, RIGHT, buff=0.1)
+        Rectangles_Label3 = MathTex(r"x").scale(2).next_to(rect_group, UP, buff=0.3)
+
+        Lil_Square = Square(side_length = 3).shift(4*RIGHT, DOWN*5).scale(0.5)
+        Lil_Square_Label = MathTex(r"c").set_fill(RED, opacity=3.5).shift(DOWN*5, RIGHT*4).scale(2)
+        Big_Square = Square(side_length = 10).set_fill(WHITE, opacity = 0.5).scale(0.5).shift(4*UP)
+        Big_Square_Label = MathTex(r"x+\frac{b}{2}").scale(2)
+        New_Area_Square = MathTex(r"(x + \frac{b}{2})^2").scale(2)
+        New_Area_Square2 = MathTex(r"(x + \frac{b}{2}) - (\frac{b}{2}) + c = 0").scale(2)
+        New_Area_Square3 = MathTex(r"(x + \frac{b}{2})^2 = \frac{b^2}{4} - c").scale(2)
+        New_Area_Square4 = MathTex(r"x = \frac{-b}{2} \pm \sqrt{\frac{b^2}{4} - c}").scale(2)
+        New_Area_Square5 = MathTex(r"x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}").scale(2)
+        New_Area_Square_Label = Text("Completando o quadrado, podemos resolver a equação quadrática.").scale(0.55)
+
+        self.play(Write(Chamada1), Create(Chamada2), Create(FSC1))
+        self.wait(3)
+        self.play(Unwrite(Chamada1), Unwrite(Chamada2), ReplacementTransform(FSC1, FSC2))
+        self.play(
+            Create(Square1), Write(Square_Label1),
+            Create(rect1), Create(rect2),
+            Create(Rectangles_Label),
+            Create(Rectangles_Label2a), Create(Rectangles_Label2b),
+            Create(Rectangles_Label3), Create(Lil_Square), Create(Lil_Square_Label)
+        )
+        self.wait(5)
+        self.play(
+            ReplacementTransform(Rectangles_Label3, Big_Square_Label),
+            Uncreate(FSC2), Uncreate(Square1),
+            Uncreate(rect1), Uncreate(rect2),
+            Uncreate(Square_Label1),
+            Uncreate(Rectangles_Label), Uncreate(Rectangles_Label2a),
+            Uncreate(Rectangles_Label2b), Uncreate(Lil_Square), Uncreate(Lil_Square_Label)
+        )
+        self.play(Wiggle(Big_Square_Label))
+        self.wait(3)
+        self.play(Create(Big_Square))
+        self.play(ReplacementTransform(Big_Square_Label, New_Area_Square))
+        self.wait(2)
+        self.play(ReplacementTransform(New_Area_Square, New_Area_Square2))
+        self.wait(2)
+        self.play(ReplacementTransform(New_Area_Square2, New_Area_Square3))
+        self.wait(2)
+        self.play(ReplacementTransform(New_Area_Square3, New_Area_Square4))
+        self.wait(2)
+        self.play(ReplacementTransform(New_Area_Square4, New_Area_Square5))
+        self.wait(2)
+        self.play(ReplacementTransform(New_Area_Square5, New_Area_Square_Label))
+        self.wait(2)
+
